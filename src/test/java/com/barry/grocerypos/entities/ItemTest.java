@@ -39,4 +39,14 @@ public class ItemTest {
 		
 	}
 	
+	
+	@Test
+	public void itemTotalPriceIsSameAsPriceIfNoWeightIsSet() {
+		Item item = new Item();
+		item.setPrice(new BigDecimal(5.00));
+		
+		assertEquals(new BigDecimal(5.00), item.totalPrice());
+		
+	}
+	
 }

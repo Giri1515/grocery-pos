@@ -7,6 +7,11 @@ import lombok.Setter;
 
 public class Item {
 	
+	
+	public Item() {
+		weight = 1;
+	}
+	
 	@Getter
 	@Setter
 	private BigDecimal price;
