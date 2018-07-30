@@ -95,11 +95,36 @@ public class OrderTest {
 	
 	@Test 
 	public void orderSizeDecreasesByOneWhenRemovingItem() {
-		order.addItem(new Item());
+		Item item = new Item();
+		item.setName("Bacon");
+		order.addItem(item);
 		
 		order.removeItem("Bacon");
 		
 		assertEquals(0, order.getSize());
+		
+	}
+	
+	@Test 
+	public void orderSizeTotalReducesByPriceOfItemRemoved() {
+		
+		Item item1 = new Item();
+		
+		item1.setName("Bacon");
+		item1.setPrice(new BigDecimal(5.75));
+		order.addItem(item1);
+		
+		
+		Item item2 = new Item();
+		
+		item2.setName("Eggs");
+		item2.setPrice(new BigDecimal(3.99));
+		order.addItem(item2);
+		
+		
+		order.removeItem("Eggs");
+		
+		assertEquals(new BigDecimal(5.75), order.total());
 		
 	}
 	

@@ -3,6 +3,7 @@ package com.barry.grocerypos.entities;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Order {
 	
@@ -28,7 +29,7 @@ public class Order {
 	
 	public void removeItem(String itemName) {
 		
-		itemList.remove(0);
+		this.itemList = itemList.stream().filter(p-> p.getName().equalsIgnoreCase(itemName)==false).collect(Collectors.toList());
 		
 	}
 }
