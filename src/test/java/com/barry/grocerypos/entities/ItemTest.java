@@ -17,5 +17,15 @@ public class ItemTest {
 		
 		assertEquals(price, item.getPrice());
 	}
+	
+	@Test
+	public void itemHasAWeight() {
+		Item item = new Item();
+		item.setWeight(2);
+		
+		
+		assertEquals(2, item.getWeight());
+		
+	}
 
 }
