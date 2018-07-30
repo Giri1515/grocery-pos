@@ -18,10 +18,12 @@ public class Order {
 	}
 	
 	public BigDecimal total() {
-		if(itemList.size()>0)
-			return itemList.get(0).getPrice();
-		else
-			return BigDecimal.ZERO;
+		
+		BigDecimal total = itemList.stream()
+			.map(Item::getPrice)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		
+		return total;
 	}
 	
 	

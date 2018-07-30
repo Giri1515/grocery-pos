@@ -61,6 +61,23 @@ public class OrderTest {
 	}
 	
 	
+	@Test
+	public void orderTotalIsSumOfPricesWhenTwoItemsInOrder() {
+		
+		Item item1 = new Item();
+		item1.setPrice(new BigDecimal(5.00));
+		
+		Item item2 = new Item();
+		item2.setPrice(new BigDecimal(2.00));
+		
+		order.addItem(item1);
+		order.addItem(item2);
+
+		
+		assertEquals(new BigDecimal(7.00), order.total());
+	}
+	
+	
 	
 
 }
