@@ -78,6 +78,19 @@ public class OrderTest {
 	}
 	
 	
+	@Test
+	public void orderTotalIncludesPriceTimesWeight() {
+		
+		Item item1 = new Item();
+		item1.setPrice(new BigDecimal(5.00));
+		item1.setWeight(2);
+		
+		order.addItem(item1);
+		
+		assertEquals(new BigDecimal(10.00), order.total());
+		
+		
+	}
 	
 
 }

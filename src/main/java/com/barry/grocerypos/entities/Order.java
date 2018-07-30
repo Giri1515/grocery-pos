@@ -20,7 +20,7 @@ public class Order {
 	public BigDecimal total() {
 		
 		BigDecimal total = itemList.stream()
-			.map(Item::getPrice)
+			.map(Item::totalPrice)
 			.reduce(BigDecimal.ZERO, BigDecimal::add);
 		
 		return total;
