@@ -49,4 +49,15 @@ public class ItemTest {
 		
 	}
 	
+	@Test
+	public void itemCanHaveName() {
+		
+		Item item = new Item();
+		item.setName("Bacon");
+		
+		assertEquals("Bacon", item.getName());
+		
+		
+	}
+	
 }
