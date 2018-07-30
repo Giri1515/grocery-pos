@@ -2,6 +2,8 @@ package com.barry.grocerypos.entities;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
+
 import org.junit.Test;
 
 public class OrderTest {
@@ -31,5 +33,15 @@ public class OrderTest {
 	
 		
 	}
+	
+	@Test
+	public void orderTotalIsZeroWithNoItems() {
+		
+		Order order = new Order();
+		
+		assertEquals(new BigDecimal(0.00), order.total());
+		
+	}
+	
 
 }

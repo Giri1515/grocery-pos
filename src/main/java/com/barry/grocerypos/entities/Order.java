@@ -1,5 +1,6 @@
 package com.barry.grocerypos.entities;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,10 @@ public class Order {
 	
 	public int getSize() {
 		return itemList.size();
+	}
+	
+	public BigDecimal total() {
+		return new BigDecimal(0.00);
 	}
 
 }
