@@ -15,5 +15,9 @@ public class Item {
 	@Getter
 	@Setter
 	private int weight;
+	
+	public BigDecimal totalPrice() {
+		return price.multiply(new BigDecimal(weight));		
+	}
 
 }

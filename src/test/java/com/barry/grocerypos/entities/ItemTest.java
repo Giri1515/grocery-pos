@@ -28,4 +28,15 @@ public class ItemTest {
 		
 	}
 
+	
+	@Test
+	public void itemTotalPriceIsWeightTimesPrice() {
+		Item item = new Item();
+		item.setWeight(2);
+		item.setPrice(new BigDecimal(5.00));
+		
+		assertEquals(new BigDecimal(10.00), item.totalPrice());
+		
+	}
+	
 }
