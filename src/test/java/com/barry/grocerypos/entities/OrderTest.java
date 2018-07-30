@@ -92,5 +92,16 @@ public class OrderTest {
 		
 	}
 	
+	
+	@Test 
+	public void orderSizeDecreasesByOneWhenRemovingItem() {
+		order.addItem(new Item());
+		
+		order.removeItem("Bacon");
+		
+		assertEquals(0, order.getSize());
+		
+	}
+	
 
 }

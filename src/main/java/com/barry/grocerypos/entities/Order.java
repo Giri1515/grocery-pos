@@ -26,5 +26,9 @@ public class Order {
 		return total;
 	}
 	
-	
+	public void removeItem(String itemName) {
+		
+		itemList.remove(0);
+		
+	}
 }
