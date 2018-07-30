@@ -4,15 +4,22 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class OrderTest {
+
+	private Order order;
+	
+	@Before
+	public void initializeOrder() {
+		order = new Order();
+	}
+	
 	
 	@Test
 	
 	public void addingItemIncreasesSizeByOne() throws Exception{
-		
-		Order order = new Order();
 		
 		Item item = new Item();
 		
@@ -24,7 +31,6 @@ public class OrderTest {
 	
 	@Test
 	public void addingTwoItemsIncreasesSizeByTwo() {
-		Order order = new Order();
 		
 		order.addItem(new Item());
 		order.addItem(new Item());
@@ -37,11 +43,12 @@ public class OrderTest {
 	@Test
 	public void orderTotalIsZeroWithNoItems() {
 		
-		Order order = new Order();
 		
 		assertEquals(new BigDecimal(0.00), order.total());
 		
 	}
+	
+	
 	
 
 }
