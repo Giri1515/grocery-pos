@@ -19,5 +19,17 @@ public class OrderTest {
 		assertEquals(1, order.getSize());
 		
 	}
+	
+	@Test
+	public void addingTwoItemsIncreasesSizeByTwo() {
+		Order order = new Order();
+		
+		order.addItem(new Item());
+		order.addItem(new Item());
+		
+		assertEquals(2, order.getSize());
+	
+		
+	}
 
 }
