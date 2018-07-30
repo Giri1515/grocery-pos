@@ -28,4 +28,36 @@ public class ItemTest {
 		
 	}
 
+	
+	@Test
+	public void itemTotalPriceIsWeightTimesPrice() {
+		Item item = new Item();
+		item.setWeight(2);
+		item.setPrice(new BigDecimal(5.00));
+		
+		assertEquals(new BigDecimal(10.00), item.totalPrice());
+		
+	}
+	
+	
+	@Test
+	public void itemTotalPriceIsSameAsPriceIfNoWeightIsSet() {
+		Item item = new Item();
+		item.setPrice(new BigDecimal(5.00));
+		
+		assertEquals(new BigDecimal(5.00), item.totalPrice());
+		
+	}
+	
+	@Test
+	public void itemCanHaveName() {
+		
+		Item item = new Item();
+		item.setName("Bacon");
+		
+		assertEquals("Bacon", item.getName());
+		
+		
+	}
+	
 }

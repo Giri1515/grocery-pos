@@ -7,6 +7,11 @@ import lombok.Setter;
 
 public class Item {
 	
+	
+	public Item() {
+		weight = 1;
+	}
+	
 	@Getter
 	@Setter
 	private BigDecimal price;
@@ -15,5 +20,15 @@ public class Item {
 	@Getter
 	@Setter
 	private int weight;
+	
+	
+	@Getter
+	@Setter
+	private String name;
+	
+	
+	public BigDecimal totalPrice() {
+		return price.multiply(new BigDecimal(weight));		
+	}
 
 }
