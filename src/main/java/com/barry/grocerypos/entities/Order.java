@@ -18,7 +18,11 @@ public class Order {
 	}
 	
 	public BigDecimal total() {
-		return new BigDecimal(0.00);
+		if(itemList.size()>0)
+			return itemList.get(0).getPrice();
+		else
+			return BigDecimal.ZERO;
 	}
-
+	
+	
 }

@@ -48,6 +48,18 @@ public class OrderTest {
 		
 	}
 	
+	@Test
+	public void orderTotalIsSameAsPriceWhenOnlyOneItemAdded() {
+		
+		Item item = new Item();
+		item.setPrice(new BigDecimal(10.00));
+		
+		order.addItem(item);
+		
+		assertEquals(new BigDecimal(10.00), order.total());
+		
+	}
+	
 	
 	
 
