@@ -261,6 +261,26 @@ public class OrderTest {
 	}
 	
 	
+	@Test
+	public void whenAddingMarkDownForItemTotalReflectsPriceMinusMarkDown() {
+		
+		MarkDown markDown = new MarkDown();
+		markDown.setItemName("Steak");
+		markDown.setPriceReduction(new BigDecimal(1.50));
+		
+		order.addMarkDown(markDown);
+		
+		Item item = createItem("Steak", 3.50);
+		order.addItem(item);
+		
+		
+		
+		assertThat(new BigDecimal(2.00), Matchers.comparesEqualTo(order.total()));
+		
+	}
+	
+	
+	
 	private Item createItem(String name, double price) {
 		Item item = new Item();
 		item.setName(name);

@@ -32,6 +32,14 @@ public class Order {
 		
 		applySpecials();
 		
+		for (Item item : itemList) {
+			MarkDown markDown = getMarkDownByName(item.getName());
+			if(markDown!=null) {
+				item.setPrice(item.getPrice().subtract(markDown.getPriceReduction()));
+			}
+		}
+		
+		
 		BigDecimal total = itemList.stream()
 				.map(Item::totalPrice)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
