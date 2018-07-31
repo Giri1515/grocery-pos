@@ -43,5 +43,21 @@ public class ScannerTest {
 		
 	}
 	
+	@Test
+	public void scanningItemWithNameAndWeightIncreasesOrderByItemPriceTimesWeight() {
+		
+		Inventory inventory = new Inventory();
+		
+		inventory.addItem("Bacon", 3.00);
+		
+		Scanner scanner = new Scanner();
+		scanner.setInventory(inventory);
+		
+		scanner.scanItemWithWeight("Bacon", 2);
+		
+		assertEquals(new BigDecimal(6.00), scanner.getOrder().total());
+		
+	}
+	
 	
 }

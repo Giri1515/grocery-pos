@@ -22,4 +22,13 @@ public class Scanner {
 		order.addItem(item);
 	}
 
+	public void scanItemWithWeight(String itemName, int weight) {
+		
+		Item item = inventory.getItemByName(itemName);
+		item.setWeight(weight);
+		
+		order.addItem(item);
+		
+	}
+
 }
