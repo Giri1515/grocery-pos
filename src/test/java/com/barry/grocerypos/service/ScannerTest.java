@@ -1,9 +1,11 @@
 package com.barry.grocerypos.service;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import com.barry.grocerypos.entities.Inventory;
@@ -55,7 +57,9 @@ public class ScannerTest {
 		
 		scanner.scanItemWithWeight("Bacon", 2);
 		
-		assertEquals(new BigDecimal(6.00), scanner.getOrder().total());
+		assertThat(new BigDecimal(6.00), Matchers.comparesEqualTo(scanner.getOrder().total()));
+		
+		
 		
 	}
 	

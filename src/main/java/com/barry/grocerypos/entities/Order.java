@@ -1,6 +1,7 @@
 package com.barry.grocerypos.entities;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,11 +25,22 @@ public class Order {
 	
 	public BigDecimal total() {
 		
-		BigDecimal total = itemList.stream()
-			.map(Item::totalPrice)
-			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		for (Item item : itemList) {
+			
+			Special special = getSpecialByName(item.getName());
+			if(special != null) {
+				if(getCountOfItem(item.getName())==special.getQuantityRequired()) {
+					// set price to special price
+					item.setPrice(special.getTotalPrice().divide(new BigDecimal(special.getQuantityRequired()), 3, RoundingMode.HALF_UP));
+				}
+			}
+		}
 		
-		return total;
+		BigDecimal total = itemList.stream()
+				.map(Item::totalPrice)
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		
+		return total.setScale(2, RoundingMode.HALF_UP);
 	}
 	
 	public void removeItem(String itemName) {

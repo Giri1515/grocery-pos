@@ -1,8 +1,11 @@
 package com.barry.grocerypos.entities;
 
 import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import org.hamcrest.Matchers;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +47,7 @@ public class OrderTest {
 	public void orderTotalIsZeroWithNoItems() {
 		
 		
-		assertEquals(new BigDecimal(0.00), order.total());
+		assertThat(BigDecimal.ZERO, Matchers.comparesEqualTo(order.total()));
 		
 	}
 	
@@ -56,7 +59,7 @@ public class OrderTest {
 		
 		order.addItem(item);
 		
-		assertEquals(new BigDecimal(10.00), order.total());
+		assertThat(new BigDecimal(10.00), Matchers.comparesEqualTo(order.total()));
 		
 	}
 	
@@ -73,8 +76,7 @@ public class OrderTest {
 		order.addItem(item1);
 		order.addItem(item2);
 
-		
-		assertEquals(new BigDecimal(7.00), order.total());
+		assertThat(new BigDecimal(7.00), Matchers.comparesEqualTo(order.total()));
 	}
 	
 	
@@ -87,7 +89,7 @@ public class OrderTest {
 		
 		order.addItem(item1);
 		
-		assertEquals(new BigDecimal(10.00), order.total());
+		assertThat(new BigDecimal(10.00), Matchers.comparesEqualTo(order.total()));
 		
 		
 	}
@@ -171,5 +173,29 @@ public class OrderTest {
 		assertEquals(3, order.getCountOfItem("Bacon"));
 		
 	}
+	
+	@Test 
+	public void whenSpecialInFormOf3For5ExistsAdding3SpecialItemsCausesTotalToBe5() {
+		
+		Special special = new Special();
+		
+		special.setItemName("Bacon");
+		special.setQuantityRequired(3);
+		special.setTotalPrice(new BigDecimal(5.00));
+		order.addSpecial(special);
+		
+		Item item = new Item();
+		item.setName("Bacon");
+		item.setPrice(new BigDecimal(2.50));
+		
+		order.addItem(item);
+		order.addItem(item);
+		order.addItem(item);
+		
+		
+		assertThat(new BigDecimal(5.00), Matchers.comparesEqualTo(order.total()));
+		
+	}
+
 	
 }
