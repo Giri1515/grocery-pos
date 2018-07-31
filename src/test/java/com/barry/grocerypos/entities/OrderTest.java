@@ -157,4 +157,19 @@ public class OrderTest {
 		
 	}
 	
+	@Test 
+	public void whenAdding3OfSameItemToOrderCountByItemReturns3() {
+		
+		Item item = new Item();
+		item.setName("Bacon");
+		item.setPrice(new BigDecimal(2.50));
+		
+		order.addItem(item);
+		order.addItem(item);
+		order.addItem(item);
+		
+		assertEquals(3, order.getCountOfItem("Bacon"));
+		
+	}
+	
 }

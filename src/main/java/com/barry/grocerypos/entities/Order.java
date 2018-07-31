@@ -50,7 +50,7 @@ public class Order {
 
 	public int getCountOfItem(String itemName) {
 
-		return 1;
+		return itemList.stream().filter(item-> item.getName().equals(itemName)).collect(Collectors.counting()).intValue();
 	}
 	
 }
