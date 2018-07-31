@@ -246,6 +246,21 @@ public class OrderTest {
 	}
 	
 	
+	@Test 
+	public void whenAddingMarkDownToOrderCanRetrieveMarkDownByName() {
+		
+		MarkDown markDown = new MarkDown();
+		markDown.setItemName("Steak");
+		markDown.setPriceReduction(new BigDecimal(1.50));
+		
+		order.addMarkDown(markDown);
+		
+			
+		assertEquals("Steak", order.getMarkDownByName("Steak").getItemName());
+		
+	}
+	
+	
 	private Item createItem(String name, double price) {
 		Item item = new Item();
 		item.setName(name);

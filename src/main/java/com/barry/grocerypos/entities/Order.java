@@ -16,6 +16,8 @@ public class Order {
 	public List<Item> itemList = new ArrayList<>();
 	
 	private Map<String, Special> specialsMap = new HashMap<>();
+	private Map<String, MarkDown> markDownMap = new HashMap<>();
+	
 	
 	public void addItem(Item newItem) {
 		
@@ -76,6 +78,19 @@ public class Order {
 
 		return itemList.stream().filter(item-> item.getName().equals(itemName)).collect(Collectors.counting()).intValue();
 	}
+
+	public void addMarkDown(MarkDown markDown) {
+		markDownMap.put(markDown.getItemName(), markDown);
+		
+	}
+
+	public MarkDown getMarkDownByName(String itemName) {
+		
+		return markDownMap.get(itemName);
+	}
+	
+	
+	
 
 	
 }
