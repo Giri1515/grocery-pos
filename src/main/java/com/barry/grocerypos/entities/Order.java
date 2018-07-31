@@ -47,5 +47,10 @@ public class Order {
 		return specialsMap.get(itemName);
 		
 	}
+
+	public int getCountOfItem(String itemName) {
+
+		return 1;
+	}
 	
 }

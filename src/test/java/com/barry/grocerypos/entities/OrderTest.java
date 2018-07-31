@@ -130,7 +130,7 @@ public class OrderTest {
 	
 	
 	@Test 
-	public void whenAddSingleSpecialToOrderCanGetSpecialByName() {
+	public void whenAddSpecialToOrderCanGetSpecialByName() {
 		
 		Special special = new Special();
 		
@@ -143,5 +143,18 @@ public class OrderTest {
 		assertEquals("Bacon", order.getSpecialByName("Bacon").getItemName());
 		
 	}
-
+	
+	
+	@Test 
+	public void whenAdding1ItemToOrderCountOfItemReturns1() {
+		
+		Item item = new Item();
+		item.setName("Bacon");
+		item.setPrice(new BigDecimal(2.50));
+		
+		order.addItem(item);
+		assertEquals(1, order.getCountOfItem("Bacon"));
+		
+	}
+	
 }
