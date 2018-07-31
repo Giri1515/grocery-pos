@@ -2,11 +2,9 @@ package com.barry.grocerypos.entities;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.hamcrest.Matchers;
@@ -113,19 +111,12 @@ public class OrderTest {
 	@Test 
 	public void orderSizeTotalReducesByPriceOfItemRemoved() {
 		
-		Item item1 = new Item();
-		
-		item1.setName("Bacon");
-		item1.setPrice(new BigDecimal(5.75));
+		Item item1 = createItem("Bacon", 5.75);
 		order.addItem(item1);
 		
 		
-		Item item2 = new Item();
-		
-		item2.setName("Eggs");
-		item2.setPrice(new BigDecimal(3.99));
+		Item item2 = createItem("Eggs", 3.99);
 		order.addItem(item2);
-		
 		
 		order.removeItem("Eggs");
 		
@@ -153,9 +144,7 @@ public class OrderTest {
 	@Test 
 	public void whenAdding1ItemToOrderCountOfItemReturns1() {
 		
-		Item item = new Item();
-		item.setName("Bacon");
-		item.setPrice(new BigDecimal(2.50));
+		Item item = createItem("Bacon", 2.50);
 		
 		order.addItem(item);
 		assertEquals(1, order.getCountOfItem("Bacon"));
@@ -165,9 +154,7 @@ public class OrderTest {
 	@Test 
 	public void whenAdding3OfSameItemToOrderCountByItemReturns3() {
 		
-		Item item = new Item();
-		item.setName("Bacon");
-		item.setPrice(new BigDecimal(2.50));
+		Item item = createItem("Bacon", 2.50);
 		
 		order.addItem(item);
 		order.addItem(item);
@@ -187,9 +174,7 @@ public class OrderTest {
 		special.setTotalPrice(new BigDecimal(5.00));
 		order.addSpecial(special);
 		
-		Item item = new Item();
-		item.setName("Bacon");
-		item.setPrice(new BigDecimal(2.50));
+		Item item = createItem("Bacon", 2.50);
 		
 		order.addItem(item);
 		order.addItem(item);
@@ -210,25 +195,16 @@ public class OrderTest {
 		special.setTotalPrice(new BigDecimal(5.00));
 		order.addSpecial(special);
 		
-		Item item1 = new Item();
-		item1.setName("Bacon");
-		item1.setPrice(new BigDecimal(2.50));
+		Item item1 = createItem("Bacon", 2.50);
 		order.addItem(item1);
 		
-		Item item2 = new Item();
-		item2.setName("Bacon");
-		item2.setPrice(new BigDecimal(2.50));
+		Item item2 = createItem("Bacon", 2.50);
 		order.addItem(item2);
 
-		Item item3 = new Item();
-		item3.setName("Bacon");
-		item3.setPrice(new BigDecimal(2.50));
+		Item item3 = createItem("Bacon", 2.50);
 		order.addItem(item3);
 		
-		Item item4 = new Item();
-		item4.setName("Bacon");
-		item4.setPrice(new BigDecimal(2.50));
-
+		Item item4 = createItem("Bacon", 2.50);
 		order.addItem(item4);
 		
 		
@@ -246,24 +222,16 @@ public class OrderTest {
 		special.setTotalPrice(new BigDecimal(5.00));
 		order.addSpecial(special);
 		
-		Item item1 = new Item();
-		item1.setName("Bacon");
-		item1.setPrice(new BigDecimal(2.50));
+		Item item1 = createItem("Bacon", 2.50);
 		order.addItem(item1);
 		
-		Item item2 = new Item();
-		item2.setName("Bacon");
-		item2.setPrice(new BigDecimal(2.50));
+		Item item2 = createItem("Bacon", 2.50);
 		order.addItem(item2);
 
-		Item item3 = new Item();
-		item3.setName("Bacon");
-		item3.setPrice(new BigDecimal(2.50));
+		Item item3 = createItem("Bacon", 2.50);
 		order.addItem(item3);
 		
-		Item item4 = new Item();
-		item4.setName("Bacon");
-		item4.setPrice(new BigDecimal(2.50));
+		Item item4 = createItem("Bacon", 2.50);
 
 		order.addItem(item4);
 		
@@ -277,6 +245,15 @@ public class OrderTest {
 		
 	}
 	
-
+	
+	private Item createItem(String name, double price) {
+		Item item = new Item();
+		item.setName(name);
+		item.setPrice(new BigDecimal(price));
+		
+		return item;
+		
+	}
+	
 	
 }
