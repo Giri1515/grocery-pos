@@ -1,12 +1,15 @@
 package com.barry.grocerypos.entities;
 
-import static org.junit.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
-import org.hamcrest.Matchers;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -232,6 +235,48 @@ public class OrderTest {
 		assertThat(new BigDecimal(7.50), Matchers.comparesEqualTo(order.total()));
 		
 	}
+	
+	@Test 
+	public void whenSpecialForBuy3For5DollarsExistAnd4ItemsAddedToOrderOneRemainsNormalPrice() {
+		
+		Special special = new Special();
+		
+		special.setItemName("Bacon");
+		special.setQuantityRequired(3);
+		special.setTotalPrice(new BigDecimal(5.00));
+		order.addSpecial(special);
+		
+		Item item1 = new Item();
+		item1.setName("Bacon");
+		item1.setPrice(new BigDecimal(2.50));
+		order.addItem(item1);
+		
+		Item item2 = new Item();
+		item2.setName("Bacon");
+		item2.setPrice(new BigDecimal(2.50));
+		order.addItem(item2);
+
+		Item item3 = new Item();
+		item3.setName("Bacon");
+		item3.setPrice(new BigDecimal(2.50));
+		order.addItem(item3);
+		
+		Item item4 = new Item();
+		item4.setName("Bacon");
+		item4.setPrice(new BigDecimal(2.50));
+
+		order.addItem(item4);
+		
+		
+		order.applySpecials();
+		
+		List<Item> normalPricedList = order.getItemList().stream().filter(item->item.getPrice().equals(new BigDecimal(2.50))).collect(Collectors.toList());
+		
+		assertEquals(1, normalPricedList.size());
+		assertEquals("Bacon", normalPricedList.get(0).getName());
+		
+	}
+	
 
 	
 }

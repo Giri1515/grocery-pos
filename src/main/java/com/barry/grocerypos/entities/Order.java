@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import lombok.Getter;
+
 public class Order {
 	
+	@Getter
 	public List<Item> itemList = new ArrayList<>();
 	
 	private Map<String, Special> specialsMap = new HashMap<>();
@@ -25,6 +28,17 @@ public class Order {
 	
 	public BigDecimal total() {
 		
+		applySpecials();
+		
+		BigDecimal total = itemList.stream()
+				.map(Item::totalPrice)
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		
+		return total.setScale(2, RoundingMode.HALF_UP);
+	}
+
+	public void applySpecials() {
+		
 		// if have item with special,then update prices with unit prices
 		for (String itemName: specialsMap.keySet()) {
 			if(itemList.stream().anyMatch(item->item.getName().equals(itemName))) {
@@ -39,11 +53,6 @@ public class Order {
 				}
 			}
 		}
-		BigDecimal total = itemList.stream()
-				.map(Item::totalPrice)
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
-		
-		return total.setScale(2, RoundingMode.HALF_UP);
 	}
 	
 	public void removeItem(String itemName) {
@@ -67,5 +76,6 @@ public class Order {
 
 		return itemList.stream().filter(item-> item.getName().equals(itemName)).collect(Collectors.counting()).intValue();
 	}
+
 	
 }
