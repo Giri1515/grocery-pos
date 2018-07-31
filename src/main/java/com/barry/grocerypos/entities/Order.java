@@ -25,17 +25,20 @@ public class Order {
 	
 	public BigDecimal total() {
 		
-		for (Item item : itemList) {
-			
-			Special special = getSpecialByName(item.getName());
-			if(special != null) {
-				if(getCountOfItem(item.getName())==special.getQuantityRequired()) {
-					// set price to special price
-					item.setPrice(special.getTotalPrice().divide(new BigDecimal(special.getQuantityRequired()), 3, RoundingMode.HALF_UP));
+		// if have item with special,then update prices with unit prices
+		for (String itemName: specialsMap.keySet()) {
+			if(itemList.stream().anyMatch(item->item.getName().equals(itemName))) {
+				//get special
+				Special special = specialsMap.get(itemName);
+				BigDecimal unitPrice = special.getTotalPrice().divide(new BigDecimal(special.getQuantityRequired()), 3, RoundingMode.HALF_UP);
+				if(getCountOfItem(itemName)>=special.getQuantityRequired()) {
+					// set price to special price for number of items
+					itemList.stream().filter(item->item.getName().equals(itemName))
+						.limit(special.getQuantityRequired())
+						.forEach(specialItem -> specialItem.setPrice(unitPrice));
 				}
 			}
 		}
-		
 		BigDecimal total = itemList.stream()
 				.map(Item::totalPrice)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);

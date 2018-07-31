@@ -196,6 +196,42 @@ public class OrderTest {
 		assertThat(new BigDecimal(5.00), Matchers.comparesEqualTo(order.total()));
 		
 	}
+	
+	@Test 
+	public void whenSpecialInFormOf3For5ExistsAdding4SpecialItemsCausesTotalToBe5PlusFullPriceOfOne() {
+		
+		Special special = new Special();
+		
+		special.setItemName("Bacon");
+		special.setQuantityRequired(3);
+		special.setTotalPrice(new BigDecimal(5.00));
+		order.addSpecial(special);
+		
+		Item item1 = new Item();
+		item1.setName("Bacon");
+		item1.setPrice(new BigDecimal(2.50));
+		order.addItem(item1);
+		
+		Item item2 = new Item();
+		item2.setName("Bacon");
+		item2.setPrice(new BigDecimal(2.50));
+		order.addItem(item2);
+
+		Item item3 = new Item();
+		item3.setName("Bacon");
+		item3.setPrice(new BigDecimal(2.50));
+		order.addItem(item3);
+		
+		Item item4 = new Item();
+		item4.setName("Bacon");
+		item4.setPrice(new BigDecimal(2.50));
+
+		order.addItem(item4);
+		
+		
+		assertThat(new BigDecimal(7.50), Matchers.comparesEqualTo(order.total()));
+		
+	}
 
 	
 }
