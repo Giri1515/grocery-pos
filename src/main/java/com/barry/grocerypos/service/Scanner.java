@@ -1,5 +1,6 @@
 package com.barry.grocerypos.service;
 
+import com.barry.grocerypos.entities.Inventory;
 import com.barry.grocerypos.entities.Item;
 import com.barry.grocerypos.entities.Order;
 
@@ -12,8 +13,13 @@ public class Scanner {
 	@Setter
 	private Order order = new Order();
 	
+	@Setter
+	private Inventory inventory;
+	
 	public void scanItem(String itemName) {
-		order.addItem(new Item());
+		Item item = inventory.getItemByName(itemName);
+		
+		order.addItem(item);
 	}
 
 }
