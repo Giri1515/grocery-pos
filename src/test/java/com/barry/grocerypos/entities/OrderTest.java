@@ -128,5 +128,20 @@ public class OrderTest {
 		
 	}
 	
+	
+	@Test 
+	public void whenAddSingleSpecialToOrderCanGetSpecialByName() {
+		
+		Special special = new Special();
+		
+		special.setItemName("Bacon");
+		special.setQuantityRequired(3);
+		special.setTotalPrice(new BigDecimal(5.00));
+		order.addSpecial(special);
+		
+		
+		assertEquals("Bacon", order.getSpecialByName("Bacon").getItemName());
+		
+	}
 
 }
