@@ -107,5 +107,11 @@ public class Order {
 	public PercentOffSpecial getPercentOffSpecialByName(String itemName) {
 		return percentOffSpecialMap.get(itemName);
 	}
+
+	public void applyPercentOffSpecials() {
+		
+		itemList.forEach(item-> item.setPrice(item.getPrice().divide(new BigDecimal(2))));
+		
+	}
 	
 }

@@ -296,6 +296,34 @@ public class OrderTest {
 	}
 	
 	
+	@Test 
+	public void whenAddingPercentOffSpecialOfBuy1Get1FreePricesAreCutInHalfForAffectedItems() {
+		
+		PercentOffSpecial percentOffSpecial = new PercentOffSpecial();
+		
+		percentOffSpecial.setItemName("Yoohoo");
+		percentOffSpecial.setPercentOff(50); // 50% off is equivalent to buy one get one
+		percentOffSpecial.setRequiredNumberOfItems(2);
+		
+		order.addPercentOffSpecial(percentOffSpecial);
+		
+		order.addItem(createItem("Yoohoo", 5.00));
+		order.addItem(createItem("Yoohoo", 5.00));
+		
+		order.applyPercentOffSpecials();
+		
+		List<Item> yoohooItems = order.getItemList();
+		
+		BigDecimal priceItem1 = yoohooItems.get(0).getPrice();
+		BigDecimal priceItem2 = yoohooItems.get(1).getPrice();
+		
+		
+		assertThat(new BigDecimal(2.50), Matchers.comparesEqualTo(priceItem1));
+		assertThat(new BigDecimal(2.50), Matchers.comparesEqualTo(priceItem2));
+		
+		
+	}
+	
 	
 	private Item createItem(String name, double price) {
 		Item item = new Item();
