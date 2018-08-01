@@ -3,6 +3,7 @@ package com.barry.grocerypos.entities;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -343,6 +344,24 @@ public class OrderTest {
 		
 	}
 	
+	
+	@Test 
+	public void whenPercentageOffSpecialRequires2ItemsAnd2ExistsQualifiesForSpecialReturnsTrue() {
+		
+		PercentOffSpecial percentOffSpecial = new PercentOffSpecial();
+		
+		percentOffSpecial.setItemName("Yoohoo");
+		percentOffSpecial.setPercentOff(75); 
+		percentOffSpecial.setRequiredNumberOfItems(2);
+		
+		order.addPercentOffSpecial(percentOffSpecial);
+		
+		order.addItem(createItem("Yoohoo", 5.00));
+		order.addItem(createItem("Yoohoo", 5.00));
+		
+		assertTrue(order.qualifiesForPercentOffSpecial(percentOffSpecial));
+		
+	}
 	
 	
 	private Item createItem(String name, double price) {
