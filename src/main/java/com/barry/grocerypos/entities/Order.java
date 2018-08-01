@@ -54,7 +54,7 @@ public class Order {
 			if(itemList.stream().anyMatch(item->item.getName().equals(itemName))) {
 				//get special
 				Special special = specialsMap.get(itemName);
-				BigDecimal unitPrice = special.getTotalPrice().divide(new BigDecimal(special.getQuantityRequired()), 3, RoundingMode.HALF_UP);
+				BigDecimal unitPrice = special.getUnitPrice();
 				if(getCountOfItem(itemName)>=special.getQuantityRequired()) {
 					// set price to special price for number of items
 					itemList.stream().filter(item->item.getName().equals(itemName))
