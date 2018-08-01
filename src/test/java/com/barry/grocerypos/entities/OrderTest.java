@@ -296,8 +296,9 @@ public class OrderTest {
 	}
 	
 	
+	
 	@Test 
-	public void whenAddingPercentOffSpecialOfBuy1Get1FreePricesAreCutInHalfForAffectedItems() {
+	public void whenAddingPercentOffSpecialOfBuy1Get1FreePricesForSecondItemIsZero() {
 		
 		PercentOffSpecial percentOffSpecial = new PercentOffSpecial();
 		
@@ -318,8 +319,8 @@ public class OrderTest {
 		BigDecimal priceItem2 = yoohooItems.get(1).getPrice();
 		
 		
-		assertThat(new BigDecimal(2.50), Matchers.comparesEqualTo(priceItem1));
-		assertThat(new BigDecimal(2.50), Matchers.comparesEqualTo(priceItem2));
+		assertThat(new BigDecimal(5.00), Matchers.comparesEqualTo(priceItem1));
+		assertThat(BigDecimal.ZERO, Matchers.comparesEqualTo(priceItem2));
 		
 		
 	}
