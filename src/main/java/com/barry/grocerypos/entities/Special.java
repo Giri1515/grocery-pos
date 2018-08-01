@@ -22,7 +22,8 @@ public class Special {
 
 	public BigDecimal getUnitPrice() {
 		
-		return totalPrice.divide(new BigDecimal(QuantityRequired), 2, RoundingMode.HALF_UP); 
+		// scale to 3 to keep precision for correct calculations when dividing uneven values
+		return totalPrice.divide(new BigDecimal(QuantityRequired), 3, RoundingMode.HALF_UP); 
 	}
 
 }
