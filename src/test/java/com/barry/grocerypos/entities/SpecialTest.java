@@ -59,55 +59,6 @@ public class SpecialTest {
 		
 	}
 	
-	@Test 
-	public void whenPercentageOffSpecialRequires2ItemsAndOnlyOneExistsQualifiesForSpecialReturnsFalse() {
-		
-		PercentOffSpecial percentOffSpecial = new PercentOffSpecial();
-		
-		percentOffSpecial.setItemName("Yoohoo");
-		percentOffSpecial.setPercentOff(75); 
-		percentOffSpecial.setRequiredNumberOfItems(2);
-		
-		Item item = new Item();
-		item.setName("Yoohoo");
-		
-		List<Item> itemList = new ArrayList<>();
-		
-		itemList.add(item);
-		
-		
-		assertFalse(percentOffSpecial.qualifiesForPercentOffSpecial(itemList));
-		
-	}
 	
-	
-	@Test 
-	public void whenPercentageOffSpecialRequires2ItemsAnd2ExistsQualifiesForSpecialReturnsTrue() {
-		
-		PercentOffSpecial percentOffSpecial = new PercentOffSpecial();
-		
-		percentOffSpecial.setItemName("Yoohoo");
-		percentOffSpecial.setPercentOff(75); 
-		percentOffSpecial.setRequiredNumberOfItems(2);
-		
-		
-		Item item1 = new Item();
-		item1.setName("Yoohoo");
-		
-
-		Item item2 = new Item();
-		item2.setName("Yoohoo");
-
-
-		List<Item> itemList = new ArrayList<>();
-		
-		itemList.add(item1);
-		itemList.add(item2);
-		
-		
-		assertTrue(percentOffSpecial.qualifiesForPercentOffSpecial(itemList));
-
-		
-	}
 
 }
