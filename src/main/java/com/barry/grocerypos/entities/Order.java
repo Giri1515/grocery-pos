@@ -114,13 +114,5 @@ public class Order {
 		
 	}
 
-	public boolean qualifiesForPercentOffSpecial(PercentOffSpecial percentOffSpecial) {
-		
-		// find items that apply to special
-		List<Item> specialItems = itemList.stream().filter(item-> item.getName().equals(percentOffSpecial.getItemName()))
-				.collect(Collectors.toList());
-		
-		return specialItems.size() >= percentOffSpecial.getRequiredNumberOfItems();
-	}
 	
 }
