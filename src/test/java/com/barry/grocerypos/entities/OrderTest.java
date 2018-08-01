@@ -1,9 +1,13 @@
 package com.barry.grocerypos.entities;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,7 +48,7 @@ public class OrderTest {
 	public void orderTotalIsZeroWithNoItems() {
 		
 		
-		assertEquals(new BigDecimal(0.00), order.total());
+		assertThat(BigDecimal.ZERO, Matchers.comparesEqualTo(order.total()));
 		
 	}
 	
@@ -56,7 +60,7 @@ public class OrderTest {
 		
 		order.addItem(item);
 		
-		assertEquals(new BigDecimal(10.00), order.total());
+		assertThat(new BigDecimal(10.00), Matchers.comparesEqualTo(order.total()));
 		
 	}
 	
@@ -73,8 +77,7 @@ public class OrderTest {
 		order.addItem(item1);
 		order.addItem(item2);
 
-		
-		assertEquals(new BigDecimal(7.00), order.total());
+		assertThat(new BigDecimal(7.00), Matchers.comparesEqualTo(order.total()));
 	}
 	
 	
@@ -87,7 +90,7 @@ public class OrderTest {
 		
 		order.addItem(item1);
 		
-		assertEquals(new BigDecimal(10.00), order.total());
+		assertThat(new BigDecimal(10.00), Matchers.comparesEqualTo(order.total()));
 		
 		
 	}
@@ -108,19 +111,12 @@ public class OrderTest {
 	@Test 
 	public void orderSizeTotalReducesByPriceOfItemRemoved() {
 		
-		Item item1 = new Item();
-		
-		item1.setName("Bacon");
-		item1.setPrice(new BigDecimal(5.75));
+		Item item1 = createItem("Bacon", 5.75);
 		order.addItem(item1);
 		
 		
-		Item item2 = new Item();
-		
-		item2.setName("Eggs");
-		item2.setPrice(new BigDecimal(3.99));
+		Item item2 = createItem("Eggs", 3.99);
 		order.addItem(item2);
-		
 		
 		order.removeItem("Eggs");
 		
@@ -128,5 +124,171 @@ public class OrderTest {
 		
 	}
 	
+	
+	@Test 
+	public void whenAddSpecialToOrderCanGetSpecialByName() {
+		
+		Special special = new Special();
+		
+		special.setItemName("Bacon");
+		special.setQuantityRequired(3);
+		special.setTotalPrice(new BigDecimal(5.00));
+		order.addSpecial(special);
+		
+		
+		assertEquals("Bacon", order.getSpecialByName("Bacon").getItemName());
+		
+	}
+	
+	
+	@Test 
+	public void whenAdding1ItemToOrderCountOfItemReturns1() {
+		
+		Item item = createItem("Bacon", 2.50);
+		
+		order.addItem(item);
+		assertEquals(1, order.getCountOfItem("Bacon"));
+		
+	}
+	
+	@Test 
+	public void whenAdding3OfSameItemToOrderCountByItemReturns3() {
+		
+		Item item = createItem("Bacon", 2.50);
+		
+		order.addItem(item);
+		order.addItem(item);
+		order.addItem(item);
+		
+		assertEquals(3, order.getCountOfItem("Bacon"));
+		
+	}
+	
+	@Test 
+	public void whenSpecialInFormOf3For5ExistsAdding3SpecialItemsCausesTotalToBe5() {
+		
+		Special special = new Special();
+		
+		special.setItemName("Bacon");
+		special.setQuantityRequired(3);
+		special.setTotalPrice(new BigDecimal(5.00));
+		order.addSpecial(special);
+		
+		Item item = createItem("Bacon", 2.50);
+		
+		order.addItem(item);
+		order.addItem(item);
+		order.addItem(item);
+		
+		
+		assertThat(new BigDecimal(5.00), Matchers.comparesEqualTo(order.total()));
+		
+	}
+	
+	@Test 
+	public void whenSpecialInFormOf3For5ExistsAdding4SpecialItemsCausesTotalToBe5PlusFullPriceOfOne() {
+		
+		Special special = new Special();
+		
+		special.setItemName("Bacon");
+		special.setQuantityRequired(3);
+		special.setTotalPrice(new BigDecimal(5.00));
+		order.addSpecial(special);
+		
+		Item item1 = createItem("Bacon", 2.50);
+		order.addItem(item1);
+		
+		Item item2 = createItem("Bacon", 2.50);
+		order.addItem(item2);
 
+		Item item3 = createItem("Bacon", 2.50);
+		order.addItem(item3);
+		
+		Item item4 = createItem("Bacon", 2.50);
+		order.addItem(item4);
+		
+		
+		assertThat(new BigDecimal(7.50), Matchers.comparesEqualTo(order.total()));
+		
+	}
+	
+	@Test 
+	public void whenSpecialForBuy3For5DollarsExistAnd4ItemsAddedToOrderOneRemainsNormalPrice() {
+		
+		Special special = new Special();
+		
+		special.setItemName("Bacon");
+		special.setQuantityRequired(3);
+		special.setTotalPrice(new BigDecimal(5.00));
+		order.addSpecial(special);
+		
+		Item item1 = createItem("Bacon", 2.50);
+		order.addItem(item1);
+		
+		Item item2 = createItem("Bacon", 2.50);
+		order.addItem(item2);
+
+		Item item3 = createItem("Bacon", 2.50);
+		order.addItem(item3);
+		
+		Item item4 = createItem("Bacon", 2.50);
+
+		order.addItem(item4);
+		
+		
+		order.applySpecials();
+		
+		List<Item> normalPricedList = order.getItemList().stream().filter(item->item.getPrice().equals(new BigDecimal(2.50))).collect(Collectors.toList());
+		
+		assertEquals(1, normalPricedList.size());
+		assertEquals("Bacon", normalPricedList.get(0).getName());
+		
+	}
+	
+	
+	@Test 
+	public void whenAddingMarkDownToOrderCanRetrieveMarkDownByName() {
+		
+		MarkDown markDown = new MarkDown();
+		markDown.setItemName("Steak");
+		markDown.setPriceReduction(new BigDecimal(1.50));
+		
+		order.addMarkDown(markDown);
+		
+			
+		assertEquals("Steak", order.getMarkDownByName("Steak").getItemName());
+		
+	}
+	
+	
+	@Test
+	public void whenAddingMarkDownForItemTotalReflectsPriceMinusMarkDown() {
+		
+		MarkDown markDown = new MarkDown();
+		markDown.setItemName("Steak");
+		markDown.setPriceReduction(new BigDecimal(1.50));
+		
+		order.addMarkDown(markDown);
+		
+		Item item = createItem("Steak", 3.50);
+		order.addItem(item);
+		
+		
+		
+		assertThat(new BigDecimal(2.00), Matchers.comparesEqualTo(order.total()));
+		
+	}
+	
+	
+	
+	private Item createItem(String name, double price) {
+		Item item = new Item();
+		item.setName(name);
+		item.setPrice(new BigDecimal(price));
+		
+		return item;
+		
+	}
+	
+	
 }
