@@ -113,5 +113,10 @@ public class Order {
 		itemList.get(1).setPrice(BigDecimal.ZERO);
 		
 	}
+
+	public boolean qualifiesForPercentOffSpecial(PercentOffSpecial percentOffSpecial) {
+		
+		return false;
+	}
 	
 }
