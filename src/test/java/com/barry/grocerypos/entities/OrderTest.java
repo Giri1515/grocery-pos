@@ -280,6 +280,22 @@ public class OrderTest {
 	}
 	
 	
+	@Test
+	public void whenAddingPercentOffSpecialCanBeRetrievedByItemName() {
+		
+		PercentOffSpecial percentOffSpecial = new PercentOffSpecial();
+		
+		percentOffSpecial.setItemName("Yoohoo");
+		percentOffSpecial.setPercentOff(15);
+		percentOffSpecial.setRequiredNumberOfItems(2);
+		
+		order.addPercentOffSpecial(percentOffSpecial);
+		
+		assertEquals("Yoohoo", order.getPercentOffSpecialByName("Yoohoo").getItemName());
+		assertEquals(15, order.getPercentOffSpecialByName("Yoohoo").getPercentOff());
+	}
+	
+	
 	
 	private Item createItem(String name, double price) {
 		Item item = new Item();

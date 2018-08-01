@@ -18,7 +18,9 @@ public class Order {
 	private Map<String, Special> specialsMap = new HashMap<>();
 	private Map<String, MarkDown> markDownMap = new HashMap<>();
 	
+	private Map<String, PercentOffSpecial> percentOffSpecialMap = new HashMap<>();
 	
+
 	public void addItem(Item newItem) {
 		
 		itemList.add(newItem);
@@ -97,8 +99,13 @@ public class Order {
 		return markDownMap.get(itemName);
 	}
 	
-	
+	public void addPercentOffSpecial(PercentOffSpecial percentOffSpecial) {
+		percentOffSpecialMap.put(percentOffSpecial.getItemName(), percentOffSpecial);
+	}
 	
 
+	public PercentOffSpecial getPercentOffSpecialByName(String itemName) {
+		return percentOffSpecialMap.get(itemName);
+	}
 	
 }
