@@ -327,7 +327,7 @@ public class OrderTest {
 	}
 	
 	@Test 
-	public void whenPercentageOffSpecialRequires2ItemsAndOnlyOneExistsQualifiesForSpecialReturnsTrue() {
+	public void whenPercentageOffSpecialRequires2ItemsAndOnlyOneExistsQualifiesForSpecialReturnsFalse() {
 		
 		PercentOffSpecial percentOffSpecial = new PercentOffSpecial();
 		
