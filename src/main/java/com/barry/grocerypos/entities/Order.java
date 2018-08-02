@@ -32,6 +32,8 @@ public class Order {
 	
 	public BigDecimal total() {
 		
+		applyPercentOffSpecials();
+		
 		applySpecials();
 		
 		for (Item item : itemList) {

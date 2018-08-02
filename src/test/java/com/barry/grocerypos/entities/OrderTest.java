@@ -343,5 +343,27 @@ public class OrderTest {
 	}
 	
 	
+	@Test 
+	public void whenPercentOffSpecialOfBuy2Get1HalfOffPriceExistsAnd3ItemsAreInOrderThenOrderTotalReflectsDiscount() {
+		
+		PercentOffSpecial percentOffSpecial = new PercentOffSpecial();
+		
+		percentOffSpecial.setItemName("Yoohoo");
+		percentOffSpecial.setPercentOff(50); 
+		percentOffSpecial.setRequiredNumberOfItems(2);
+		percentOffSpecial.setNumberOfItemsEligible(1);
+		
+		order.addPercentOffSpecial(percentOffSpecial);
+		
+		order.addItem(new Item("Yoohoo", 5.00));
+		order.addItem(new Item("Yoohoo", 5.00));
+		order.addItem(new Item("Yoohoo", 5.00));
+		
+		assertThat(new BigDecimal(12.50), Matchers.comparesEqualTo(order.total()));
+		
+		
+	}
+	
+	
 	
 }
