@@ -54,12 +54,9 @@ public class PercentOffSpecialTest {
 		percentOffSpecial.setPercentOff(75); 
 		percentOffSpecial.setRequiredNumberOfItems(2);
 		
-		Item item = new Item();
-		item.setName("Yoohoo");
-		
 		List<Item> itemList = new ArrayList<>();
 		
-		itemList.add(item);
+		itemList.add(new Item("Yoohoo", 10.00));
 		
 		
 		assertFalse(percentOffSpecial.qualifiesForPercentOffSpecial(itemList));
@@ -76,19 +73,11 @@ public class PercentOffSpecialTest {
 		percentOffSpecial.setPercentOff(75); 
 		percentOffSpecial.setRequiredNumberOfItems(2);
 		
-		
-		Item item1 = new Item();
-		item1.setName("Yoohoo");
-		
-
-		Item item2 = new Item();
-		item2.setName("Yoohoo");
-
 
 		List<Item> itemList = new ArrayList<>();
 		
-		itemList.add(item1);
-		itemList.add(item2);
+		itemList.add(new Item("Yoohoo", 10.00));
+		itemList.add(new Item("Yoohoo", 10.00));
 		
 		
 		assertTrue(percentOffSpecial.qualifiesForPercentOffSpecial(itemList));
@@ -107,25 +96,11 @@ public class PercentOffSpecialTest {
 		percentOffSpecial.setRequiredNumberOfItems(2);
 		percentOffSpecial.setNumberOfItemsEligible(1);
 		
-		
-		Item item1 = new Item();
-		item1.setName("Yoohoo");
-		item1.setPrice(new BigDecimal(10.00));
-		
-
-		Item item2 = new Item();
-		item2.setName("Yoohoo");
-		item2.setPrice(new BigDecimal(10.00));
-
-		Item item3 = new Item();
-		item3.setName("Yoohoo");
-		item3.setPrice(new BigDecimal(10.00));
-
 		List<Item> itemList = new ArrayList<>();
 		
-		itemList.add(item1);
-		itemList.add(item2);
-		itemList.add(item3);
+		itemList.add(new Item("Yoohoo", 10.00));
+		itemList.add(new Item("Yoohoo", 10.00));
+		itemList.add(new Item("Yoohoo", 10.00));
 		
 		percentOffSpecial.applySpecial(itemList);
 		
