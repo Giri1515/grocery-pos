@@ -45,7 +45,13 @@ public class PercentOffSpecial {
 
 	public void applySpecial(List<Item> itemList) {
 		
-		itemList.get(0).setPrice(new BigDecimal(2.50));
+		// get items that this special applies to
+		itemList.stream().filter(p->p.getName().equals(itemName))
+		// now limit list to just how many are eligible
+		.limit(numberOfItemsEligible)
+		// for each of them reduce the price
+		.forEach(item-> item.setPrice(calcDiscountPrice(item.getPrice())));
+				
 		
 	}
 	

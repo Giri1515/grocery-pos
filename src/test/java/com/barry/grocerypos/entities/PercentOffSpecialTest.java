@@ -113,6 +113,36 @@ public class PercentOffSpecialTest {
 		
 	}
 	
+	
+	@Test
+	public void whenNumberOfItemsEligibleIsTwoThenDiscountIsAppliedToTwoItems() {
+		
+		PercentOffSpecial percentOffSpecial = new PercentOffSpecial();
+		
+		// buy 2 get 2 for 50% off
+		percentOffSpecial.setItemName("Yoohoo");
+		percentOffSpecial.setPercentOff(50); 
+		percentOffSpecial.setRequiredNumberOfItems(2);
+		percentOffSpecial.setNumberOfItemsEligible(2);
+		
+		List<Item> itemList = new ArrayList<>();
+		
+		itemList.add(new Item("Yoohoo", 10.00));
+		itemList.add(new Item("Yoohoo", 10.00));
+		itemList.add(new Item("Yoohoo", 10.00));
+		itemList.add(new Item("Yoohoo", 10.00));
+		
+		percentOffSpecial.applySpecial(itemList);
+		
+		int numberOfDiscountedItems = (int) itemList.stream().filter(item->item.getPrice().compareTo(new BigDecimal(5.00))==0).count();
+		int numberOfNonDiscountedItems = (int) itemList.stream().filter(item->item.getPrice().compareTo(new BigDecimal(10.00))==0).count();
+		assertEquals(2, numberOfDiscountedItems);
+		assertEquals(2, numberOfNonDiscountedItems);
+		
+		
+		
+	}
+	
 
 	
 }
