@@ -4,7 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ItemTest {
 	
@@ -57,6 +60,16 @@ public class ItemTest {
 		
 		assertEquals("Bacon", item.getName());
 		
+		
+	}
+	
+	@Test 
+	public void whencreatingItemWithConstructorCanPassNameAndPriceAsDouble() {
+		
+		Item item = new Item("Bacon", 2.50);
+		
+		assertEquals("Bacon", item.getName());
+		assertThat(new BigDecimal(2.50), Matchers.comparesEqualTo(item.getPrice()));
 		
 	}
 	

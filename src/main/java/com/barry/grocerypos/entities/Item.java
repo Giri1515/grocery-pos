@@ -8,6 +8,12 @@ import lombok.Setter;
 public class Item {
 	
 	
+	public Item(String itemName, double priceAsDouble) {
+		
+		this.name=itemName;
+		this.price = new BigDecimal(priceAsDouble);
+	}
+	
 	public Item() {
 		weight = 1;
 	}
