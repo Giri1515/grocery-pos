@@ -21,6 +21,10 @@ public class PercentOffSpecial {
 	@Getter
 	@Setter
 	private int requiredNumberOfItems;
+	
+	
+	@Setter
+	private int numberOfItemsEligible;
 
 
 	public BigDecimal calcDiscountPrice(BigDecimal price) {
@@ -38,5 +42,14 @@ public class PercentOffSpecial {
 		
 		return specialItems.size() >= this.requiredNumberOfItems;
 	}
+
+	public void applySpecial(List<Item> itemList) {
+		
+		itemList.get(0).setPrice(new BigDecimal(2.50));
+		
+	}
+	
+	
+	
 
 }
