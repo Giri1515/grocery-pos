@@ -12,6 +12,7 @@ public class Item {
 		
 		this.name=itemName;
 		this.price = new BigDecimal(priceAsDouble);
+		this.weight=1;
 	}
 	
 	public Item() {

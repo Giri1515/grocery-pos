@@ -73,4 +73,15 @@ public class ItemTest {
 		
 	}
 	
+	
+	@Test 
+	public void whencreatingItemWithConstructorWithNameAndPriceWeightIsDefaultedToOne() {
+		
+		Item item = new Item("Bacon", 2.50);
+		
+		assertEquals("Bacon", item.getName());
+		assertEquals(1, item.getWeight());
+		
+	}
+	
 }
