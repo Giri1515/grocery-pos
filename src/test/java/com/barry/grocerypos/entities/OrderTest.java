@@ -2,11 +2,11 @@ package com.barry.grocerypos.entities;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.hamcrest.Matchers;
@@ -290,6 +290,7 @@ public class OrderTest {
 		percentOffSpecial.setItemName("Yoohoo");
 		percentOffSpecial.setPercentOff(100); 
 		percentOffSpecial.setRequiredNumberOfItems(1);
+		percentOffSpecial.setNumberOfItemsEligible(1);
 		
 		order.addPercentOffSpecial(percentOffSpecial);
 		
@@ -306,6 +307,37 @@ public class OrderTest {
 		
 		assertThat(new BigDecimal(5.00), Matchers.comparesEqualTo(priceItem1));
 		assertThat(BigDecimal.ZERO, Matchers.comparesEqualTo(priceItem2));
+		
+		
+	}
+	
+	
+	@Test 
+	public void whenAddingPercentOffSpecialOfBuy2Get1HalfOffPriceForThirdItemIsHalf() {
+		
+		PercentOffSpecial percentOffSpecial = new PercentOffSpecial();
+		
+		percentOffSpecial.setItemName("Yoohoo");
+		percentOffSpecial.setPercentOff(50); 
+		percentOffSpecial.setRequiredNumberOfItems(2);
+		percentOffSpecial.setNumberOfItemsEligible(1);
+		
+		order.addPercentOffSpecial(percentOffSpecial);
+		
+		order.addItem(new Item("Yoohoo", 5.00));
+		order.addItem(new Item("Yoohoo", 5.00));
+		order.addItem(new Item("Yoohoo", 5.00));
+		
+		order.applyPercentOffSpecials();
+		
+		List<Item> yoohooItems = order.getItemList();
+		
+		List<Item> itemsAt5Dollars = yoohooItems.stream().filter(item->item.getPrice().compareTo(new BigDecimal(5.00))==0).collect(Collectors.toList());
+		Optional<Item> halfOffItem = yoohooItems.stream().filter(item->item.getPrice().compareTo(new BigDecimal(2.50))==0).findFirst();
+		assertEquals(2, itemsAt5Dollars.size()); // we have two items at 5.00
+		
+		assertTrue(halfOffItem.isPresent());
+		assertThat(new BigDecimal(2.50), Matchers.comparesEqualTo(halfOffItem.get().getPrice()));
 		
 		
 	}

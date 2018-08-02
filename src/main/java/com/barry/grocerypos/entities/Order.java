@@ -110,7 +110,7 @@ public class Order {
 
 	public void applyPercentOffSpecials() {
 		
-		itemList.get(1).setPrice(BigDecimal.ZERO);
+		percentOffSpecialMap.entrySet().forEach(special->special.getValue().applySpecial(itemList));
 		
 	}
 
