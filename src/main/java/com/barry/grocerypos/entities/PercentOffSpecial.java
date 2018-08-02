@@ -45,8 +45,11 @@ public class PercentOffSpecial {
 
 	public void applySpecial(List<Item> itemList) {
 		
+		
 		// get items that this special applies to
 		itemList.stream().filter(p->p.getName().equals(itemName))
+		// skip the items required to get special
+		.skip(requiredNumberOfItems)
 		// now limit list to just how many are eligible
 		.limit(numberOfItemsEligible)
 		// for each of them reduce the price
