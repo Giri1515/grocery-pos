@@ -57,10 +57,7 @@ public class OrderTest {
 	@Test
 	public void orderTotalIsSameAsPriceWhenOnlyOneItemAdded() {
 		
-		Item item = new Item();
-		item.setPrice(new BigDecimal(10.00));
-		
-		order.addItem(item);
+		order.addItem(new Item("Taffy", 10.00));
 		
 		assertThat(new BigDecimal(10.00), Matchers.comparesEqualTo(order.total()));
 		
@@ -70,14 +67,9 @@ public class OrderTest {
 	@Test
 	public void orderTotalIsSumOfPricesWhenTwoItemsInOrder() {
 		
-		Item item1 = new Item();
-		item1.setPrice(new BigDecimal(5.00));
-		
-		Item item2 = new Item();
-		item2.setPrice(new BigDecimal(2.00));
-		
-		order.addItem(item1);
-		order.addItem(item2);
+			
+		order.addItem(new Item("Taffy", 5.00));
+		order.addItem(new Item("Snickers", 2.00));
 
 		assertThat(new BigDecimal(7.00), Matchers.comparesEqualTo(order.total()));
 	}
@@ -113,12 +105,10 @@ public class OrderTest {
 	@Test 
 	public void orderSizeTotalReducesByPriceOfItemRemoved() {
 		
-		Item item1 = createItem("Bacon", 5.75);
-		order.addItem(item1);
+
+		order.addItem(new Item("Bacon", 5.75));
 		
-		
-		Item item2 = createItem("Eggs", 3.99);
-		order.addItem(item2);
+		order.addItem(new Item("Eggs", 3.99));
 		
 		order.removeItem("Eggs");
 		
@@ -146,9 +136,9 @@ public class OrderTest {
 	@Test 
 	public void whenAdding1ItemToOrderCountOfItemReturns1() {
 		
-		Item item = createItem("Bacon", 2.50);
 		
-		order.addItem(item);
+		
+		order.addItem(new Item("Bacon", 2.50));
 		assertEquals(1, order.getCountOfItem("Bacon"));
 		
 	}
@@ -156,7 +146,7 @@ public class OrderTest {
 	@Test 
 	public void whenAdding3OfSameItemToOrderCountByItemReturns3() {
 		
-		Item item = createItem("Bacon", 2.50);
+		Item item = new Item("Bacon", 2.50);
 		
 		order.addItem(item);
 		order.addItem(item);
@@ -176,7 +166,7 @@ public class OrderTest {
 		special.setTotalPrice(new BigDecimal(5.00));
 		order.addSpecial(special);
 		
-		Item item = createItem("Bacon", 2.50);
+		Item item = new Item("Bacon", 2.50);
 		
 		order.addItem(item);
 		order.addItem(item);
@@ -197,17 +187,14 @@ public class OrderTest {
 		special.setTotalPrice(new BigDecimal(5.00));
 		order.addSpecial(special);
 		
-		Item item1 = createItem("Bacon", 2.50);
-		order.addItem(item1);
 		
-		Item item2 = createItem("Bacon", 2.50);
-		order.addItem(item2);
+		order.addItem(new Item("Bacon", 2.50));
+		
+		order.addItem(new Item("Bacon", 2.50));
 
-		Item item3 = createItem("Bacon", 2.50);
-		order.addItem(item3);
+		order.addItem(new Item("Bacon", 2.50));
 		
-		Item item4 = createItem("Bacon", 2.50);
-		order.addItem(item4);
+		order.addItem(new Item("Bacon", 2.50));
 		
 		
 		assertThat(new BigDecimal(7.50), Matchers.comparesEqualTo(order.total()));
@@ -224,18 +211,14 @@ public class OrderTest {
 		special.setTotalPrice(new BigDecimal(5.00));
 		order.addSpecial(special);
 		
-		Item item1 = createItem("Bacon", 2.50);
-		order.addItem(item1);
 		
-		Item item2 = createItem("Bacon", 2.50);
-		order.addItem(item2);
-
-		Item item3 = createItem("Bacon", 2.50);
-		order.addItem(item3);
+		order.addItem(new Item("Bacon", 2.50));
 		
-		Item item4 = createItem("Bacon", 2.50);
+		order.addItem(new Item("Bacon", 2.50));
 
-		order.addItem(item4);
+		order.addItem(new Item("Bacon", 2.50));
+		
+		order.addItem(new Item("Bacon", 2.50));
 		
 		
 		order.applySpecials();
@@ -272,8 +255,8 @@ public class OrderTest {
 		
 		order.addMarkDown(markDown);
 		
-		Item item = createItem("Steak", 3.50);
-		order.addItem(item);
+
+		order.addItem(new Item("Steak", 3.50));
 		
 		
 		
@@ -310,8 +293,8 @@ public class OrderTest {
 		
 		order.addPercentOffSpecial(percentOffSpecial);
 		
-		order.addItem(createItem("Yoohoo", 5.00));
-		order.addItem(createItem("Yoohoo", 5.00));
+		order.addItem(new Item("Yoohoo", 5.00));
+		order.addItem(new Item("Yoohoo", 5.00));
 		
 		order.applyPercentOffSpecials();
 		
@@ -327,16 +310,6 @@ public class OrderTest {
 		
 	}
 	
-	
-	
-	private Item createItem(String name, double price) {
-		Item item = new Item();
-		item.setName(name);
-		item.setPrice(new BigDecimal(price));
-		
-		return item;
-		
-	}
 	
 	
 }
