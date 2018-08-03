@@ -18,7 +18,9 @@ public class Order {
 	private Map<String, Special> specialsMap = new HashMap<>();
 	private Map<String, MarkDown> markDownMap = new HashMap<>();
 	
+	private Map<String, PercentOffSpecial> percentOffSpecialMap = new HashMap<>();
 	
+
 	public void addItem(Item newItem) {
 		
 		itemList.add(newItem);
@@ -30,14 +32,13 @@ public class Order {
 	
 	public BigDecimal total() {
 		
+
+		applyMarkDowns();
+		
+		applyPercentOffSpecials();
+		
 		applySpecials();
 		
-		for (Item item : itemList) {
-			MarkDown markDown = getMarkDownByName(item.getName());
-			if(markDown!=null) {
-				item.setPrice(item.getPrice().subtract(markDown.getPriceReduction()));
-			}
-		}
 		
 		
 		BigDecimal total = itemList.stream()
@@ -45,6 +46,16 @@ public class Order {
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 		
 		return total.setScale(2, RoundingMode.HALF_UP);
+	}
+	
+	public void applyMarkDowns() {
+		for (Item item : itemList) {
+			MarkDown markDown = getMarkDownByName(item.getName());
+			if(markDown!=null) {
+				item.setPrice(item.getPrice().subtract(markDown.getPriceReduction()));
+			}
+		}
+		
 	}
 
 	public void applySpecials() {
@@ -54,7 +65,7 @@ public class Order {
 			if(itemList.stream().anyMatch(item->item.getName().equals(itemName))) {
 				//get special
 				Special special = specialsMap.get(itemName);
-				BigDecimal unitPrice = special.getTotalPrice().divide(new BigDecimal(special.getQuantityRequired()), 3, RoundingMode.HALF_UP);
+				BigDecimal unitPrice = special.getUnitPrice();
 				if(getCountOfItem(itemName)>=special.getQuantityRequired()) {
 					// set price to special price for number of items
 					itemList.stream().filter(item->item.getName().equals(itemName))
@@ -97,8 +108,20 @@ public class Order {
 		return markDownMap.get(itemName);
 	}
 	
+	public void addPercentOffSpecial(PercentOffSpecial percentOffSpecial) {
+		percentOffSpecialMap.put(percentOffSpecial.getItemName(), percentOffSpecial);
+	}
 	
-	
+
+	public PercentOffSpecial getPercentOffSpecialByName(String itemName) {
+		return percentOffSpecialMap.get(itemName);
+	}
+
+	public void applyPercentOffSpecials() {
+		
+		percentOffSpecialMap.entrySet().forEach(special->special.getValue().applySpecial(itemList));
+		
+	}
 
 	
 }
