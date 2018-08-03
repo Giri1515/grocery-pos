@@ -11,6 +11,6 @@ public class ScannerController {
 
 	@RequestMapping(value = "/items", method = POST, produces= "application/json")
 	public String scanItem() {
-		return "{}";
+		return "{\"orderTotal\":3.55}";
 	}
 }
