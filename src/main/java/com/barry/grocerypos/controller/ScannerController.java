@@ -1,5 +1,7 @@
 package com.barry.grocerypos.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/scanner")
 public class ScannerController {
 
-	@RequestMapping("/items")
-	public void scanItem() {
-		
+	@RequestMapping(value = "/items", method = POST, produces= "application/json")
+	public String scanItem() {
+		return "{}";
 	}
 }

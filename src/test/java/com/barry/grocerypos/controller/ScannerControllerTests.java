@@ -1,6 +1,7 @@
 package com.barry.grocerypos.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -30,4 +31,18 @@ public class ScannerControllerTests {
 				.andExpect(status().isOk());
 		
 	}
+	
+	@Test
+	public void whenPostToScannerItemsURIReturnsJSONContentTypeInHeader() throws Exception {
+		
+	
+		mockMvc.perform(post("/scanner/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(""))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+				
+		
+	}
+	
 }
