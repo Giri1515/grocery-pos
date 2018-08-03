@@ -123,5 +123,10 @@ public class Order {
 		
 	}
 
+	public void clearOrder() {
+		itemList.clear();
+		
+	}
+
 	
 }

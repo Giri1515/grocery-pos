@@ -364,6 +364,18 @@ public class OrderTest {
 		
 	}
 	
+	@Test
+	public void whenAddingItemsThenCallingClearOrderCausesTotalPriceToBeZero() {
+		
+		order.addItem(new Item("Yoohoo", 5.00));
+		order.addItem(new Item("Yoohoo", 5.00));
+		
+		order.clearOrder();
+		
+		assertThat(BigDecimal.ZERO, Matchers.comparesEqualTo(order.total()));
+		
+	}
+	
 	
 	
 }
