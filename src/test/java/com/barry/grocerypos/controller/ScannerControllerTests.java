@@ -31,21 +31,22 @@ public class ScannerControllerTests {
 	
 	@Test
 	public void whenPostToScannerItemWithValidPayloadReturnsOK() throws Exception {
+		String itemNameJson = "{\"itemName\":\"Bacon\"}";
 		
 		mockMvc.perform(post("/scanner/items")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(""))
+				.content(itemNameJson))
 				.andExpect(status().isOk());
 		
 	}
 	
 	@Test
 	public void whenPostToScannerItemsURIReturnsJSONContentTypeInHeader() throws Exception {
-		
+		String itemNameJson = "{\"itemName\":\"Bacon\"}";
 	
 		mockMvc.perform(post("/scanner/items")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(""))
+				.content(itemNameJson))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
 				
@@ -64,6 +65,21 @@ public class ScannerControllerTests {
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath(".orderTotal", hasItem(3.55)));
+				
+	}
+	
+	@Test
+	public void whenEggsAddedToInventoryAndOnePostToScannerWithEggThenReturnsPriceOfItemFromInventory() throws Exception {
+		String itemNameJson = "{\"itemName\":\"Eggs\"}";
+		
+		inventory.addItem("Eggs", 2.89);
+		
+		mockMvc.perform(post("/scanner/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(itemNameJson))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath(".orderTotal", hasItem(2.89)));
 				
 	}
 	
