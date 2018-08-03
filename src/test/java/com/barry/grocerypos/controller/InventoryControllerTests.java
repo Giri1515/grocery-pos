@@ -11,6 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.hamcrest.CoreMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,6 +32,21 @@ public class InventoryControllerTests {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(""))
 				.andExpect(status().isOk());
+		
+	}
+	
+	@Test
+	public void whenPostToInventoryItemsURIReturnsJSON() throws Exception {
+		
+
+		String itemJSON = "{\"name\":\"Swiss Cake Rolls\",\"price\":2.99}";
+		
+		mockMvc.perform(post("/inventory/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(itemJSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+				
 		
 	}
 	
