@@ -39,14 +39,28 @@ public class InventoryControllerTests {
 	public void whenPostToInventoryItemsURIReturnsJSON() throws Exception {
 		
 
+		mockMvc.perform(post("/inventory/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(""))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+				
+		
+	}
+	
+	
+	@Test
+	public void whenPostItemJSONToItemsURIReturnsItemName() throws Exception {
+		
+
 		String itemJSON = "{\"name\":\"Swiss Cake Rolls\",\"price\":2.99}";
 		
 		mockMvc.perform(post("/inventory/items")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(itemJSON))
 				.andExpect(status().isOk())
-				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-				
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath(".name", hasItem("Swiss Cake Rolls")));
 		
 	}
 	

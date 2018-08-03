@@ -11,9 +11,8 @@ public class InventoryController {
 
 	
 	@RequestMapping(value = "/items", method = POST, produces= "application/json")
-
 	public String addItems() {
-		return "";
+		return "{\"name\":\"Swiss Cake Rolls\"}";
 	}
 	
 }
