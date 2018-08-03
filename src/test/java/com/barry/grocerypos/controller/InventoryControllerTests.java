@@ -27,10 +27,11 @@ public class InventoryControllerTests {
 	
 	@Test
 	public void whenPostingToInventoryItemsURISomethingIsListening() throws Exception {
+		String itemJSON = "{\"name\":\"Swiss Cake Rolls\",\"price\":2.99}";
 		
 		mockMvc.perform(post("/inventory/items")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(""))
+				.content(itemJSON))
 				.andExpect(status().isOk());
 		
 	}
@@ -38,10 +39,11 @@ public class InventoryControllerTests {
 	@Test
 	public void whenPostToInventoryItemsURIReturnsJSON() throws Exception {
 		
+		String itemJSON = "{\"name\":\"Swiss Cake Rolls\",\"price\":2.99}";
 
 		mockMvc.perform(post("/inventory/items")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(""))
+				.content(itemJSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
 				
@@ -61,6 +63,22 @@ public class InventoryControllerTests {
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath(".name", hasItem("Swiss Cake Rolls")));
+		
+	}
+	
+	@Test
+	public void whenPostItemJSONToItemsURIReturnsItemNameAndPrice() throws Exception {
+		
+
+		String itemJSON = "{\"name\":\"Swiss Cake Rolls\",\"price\":2.99}";
+		
+		mockMvc.perform(post("/inventory/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(itemJSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath(".name", hasItem("Swiss Cake Rolls")))
+				.andExpect(jsonPath(".price", hasItem(2.99)));
 		
 	}
 	
