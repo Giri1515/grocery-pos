@@ -2,15 +2,14 @@ package com.barry.grocerypos.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.barry.grocerypos.entities.Inventory;
+import com.barry.grocerypos.entities.Item;
+import com.barry.grocerypos.entities.Order;
 import com.barry.grocerypos.entities.ScanRequest;
 
 @RestController
@@ -20,10 +19,15 @@ public class ScannerController {
 	@Autowired
 	private Inventory inventory;
 	
+	@Autowired
+	private Order order;
+	
 	@RequestMapping(value = "/items", method = POST, produces= "application/json")
 	public String scanItem(@RequestBody ScanRequest scanRequest) {
-		BigDecimal price = inventory.getItemByName(scanRequest.getItemName()).getPrice();
+		Item item = inventory.getItemByName(scanRequest.getItemName());
 		
-		return String.format("{\"orderTotal\":%s}", price.setScale(2, RoundingMode.HALF_UP));
+		order.addItem(item);
+		
+		return String.format("{\"orderTotal\":%s}", order.total().toString());
 	}
 }

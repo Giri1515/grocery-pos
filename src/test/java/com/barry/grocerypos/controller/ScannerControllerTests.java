@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.barry.grocerypos.entities.Inventory;
+import com.barry.grocerypos.entities.Order;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,6 +30,14 @@ public class ScannerControllerTests {
 	
 	@Autowired
 	Inventory inventory;
+	
+	@Autowired
+	Order order;
+	
+	@Before
+	public void initOrder() {
+		order.clearOrder();
+	}
 	
 	@Test
 	public void whenPostToScannerItemWithValidPayloadReturnsOK() throws Exception {
@@ -80,6 +90,29 @@ public class ScannerControllerTests {
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath(".orderTotal", hasItem(2.89)));
+				
+	}
+	
+	
+	@Test
+	public void whenScanItemCalledTwiceForAnItemThenSecondReturnsTwicePriceOfItem() throws Exception {
+		String itemNameJson = "{\"itemName\":\"Eggs\"}";
+		
+		inventory.addItem("Eggs", 2.50);
+		
+		mockMvc.perform(post("/scanner/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(itemNameJson))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath(".orderTotal", hasItem(2.50)));
+		
+		mockMvc.perform(post("/scanner/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(itemNameJson))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath(".orderTotal", hasItem(5.00)));
 				
 	}
 	
