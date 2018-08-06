@@ -26,7 +26,11 @@ public class ScannerController {
 	public String scanItem(@RequestBody ScanRequest scanRequest) {
 		Item item = inventory.getItemByName(scanRequest.getItemName());
 		
+		if(scanRequest.getWeight()!=0) {
+			item.setWeight(scanRequest.getWeight());
+		}
 		order.addItem(item);
+		
 		
 		return String.format("{\"orderTotal\":%s}", order.total().toString());
 	}

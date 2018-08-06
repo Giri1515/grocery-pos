@@ -116,4 +116,21 @@ public class ScannerControllerTests {
 				
 	}
 	
+	
+	@Test
+	public void whenScanItemCalledWithWeightOf2ThenReturnsTwicePriceOfItem() throws Exception {
+		String itemNameJson = "{\"itemName\":\"Eggs\", \"weight\":2}";
+		
+		inventory.addItem("Eggs", 2.50);
+		
+		mockMvc.perform(post("/scanner/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(itemNameJson))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath(".orderTotal", hasItem(5.00)));
+		
+				
+	}
+	
 }

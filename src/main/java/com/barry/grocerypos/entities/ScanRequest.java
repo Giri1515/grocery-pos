@@ -9,4 +9,9 @@ public class ScanRequest {
 	@Setter
 	private String itemName;
 	
+	
+	@Getter
+	@Setter
+	private int weight;
+	
 }
