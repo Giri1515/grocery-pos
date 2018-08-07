@@ -1,6 +1,8 @@
 package com.barry.grocerypos.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -16,6 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.barry.grocerypos.entities.MarkDown;
 import com.barry.grocerypos.entities.Order;
+
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
@@ -59,6 +63,23 @@ public class SpecialsControllerTests {
 		
 		
 		verify(order).addMarkDown((Mockito.any(MarkDown.class)));
+	}
+	
+	
+	@Test
+	public void whenPostingToTheMarkDownsURIWithValidRequestSuccessResponseIsReturned() throws Exception {
+		
+		
+		String specialJSON = "{\"itemName\":\"Bacon\", \"priceReduction\":1.45}";
+		
+		
+		mockMvc.perform(post("/specials/markdowns")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(specialJSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath(".message", hasItem("MarkDown Successfully Added")));
+		
 	}
 	
 

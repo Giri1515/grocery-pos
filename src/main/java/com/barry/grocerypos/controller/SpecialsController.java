@@ -17,12 +17,12 @@ public class SpecialsController {
 	@Autowired
 	private Order order;
 	
-	@RequestMapping(value = "/markdowns", method=POST)
+	@RequestMapping(value = "/markdowns", method=POST,  produces= "application/json")
 	public String addMarkDown(@RequestBody MarkDown markDown) {
 		
 		order.addMarkDown(markDown);
 		
-		return "";
+		return "{\"message\":\"MarkDown Successfully Added\"}";
 	}
 
 }
