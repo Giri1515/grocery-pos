@@ -5,12 +5,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import com.barry.grocerypos.entities.MarkDown;
+import com.barry.grocerypos.entities.Order;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -21,17 +28,37 @@ public class SpecialsControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 	
+	@SpyBean
+	private Order order;
+	
 	@Test
 	public void whenPostingToTheMarkDownsURIWithValidRequestCanGetASuccessfullResponse() throws Exception {
 		
 		
-		String specialJSON = "{\"itemName\":\"Bacon\", \"amountOff\":1.45}";
+		String specialJSON = "{\"itemName\":\"Bacon\", \"priceReduction\":1.45}";
 		
 		mockMvc.perform(post("/specials/markdowns")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(specialJSON))
 				.andExpect(status().isOk());
 		
+	}
+	
+	@Test
+	public void whenPostingToTheMarkDownsURIWithValidRequestMarkDownIsAddedToOrder() throws Exception {
+		
+		
+		String specialJSON = "{\"itemName\":\"Bacon\", \"priceReduction\":1.45}";
+		
+		doNothing().when(order).addMarkDown((Mockito.any(MarkDown.class)));
+		
+		mockMvc.perform(post("/specials/markdowns")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(specialJSON))
+				.andExpect(status().isOk());
+		
+		
+		verify(order).addMarkDown((Mockito.any(MarkDown.class)));
 	}
 	
 
