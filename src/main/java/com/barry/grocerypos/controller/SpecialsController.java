@@ -24,5 +24,12 @@ public class SpecialsController {
 		
 		return "{\"message\":\"MarkDown Successfully Added\"}";
 	}
+	
+	
+	@RequestMapping(value = "/buyXForPrice", method=POST)
+	public String addBuyXForPriceSpecial() {
+		
+		return "";
+	}
 
 }
