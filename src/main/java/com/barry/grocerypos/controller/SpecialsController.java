@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.barry.grocerypos.entities.MarkDown;
 import com.barry.grocerypos.entities.Order;
+import com.barry.grocerypos.entities.Special;
 
 @RestController
 @RequestMapping("/specials")
@@ -27,7 +28,10 @@ public class SpecialsController {
 	
 	
 	@RequestMapping(value = "/buyXForPrice", method=POST, produces= "application/json")
-	public String addBuyXForPriceSpecial() {
+	public String addBuyXForPriceSpecial(@RequestBody Special special) {
+		
+		order.addSpecial(special);
+		
 		
 		return "{\"message\":\"Special Successfully Added\"}";
 	}

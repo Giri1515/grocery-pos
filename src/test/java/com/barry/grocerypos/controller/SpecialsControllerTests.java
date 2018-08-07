@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.barry.grocerypos.entities.MarkDown;
 import com.barry.grocerypos.entities.Order;
+import com.barry.grocerypos.entities.Special;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.mockito.Mockito.doNothing;
@@ -111,6 +112,22 @@ public class SpecialsControllerTests {
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath(".message", hasItem("Special Successfully Added")));
 		
+	}
+	
+	@Test
+	public void whenPostingToTheBuyXForPriceURIWithValidRequestSpecialIsAddedToOrder() throws Exception {
+		
+		String specialJSON = "{\"itemName\":\"Eggs\", \"QuantityRequired\":3, \"totalPrice\":5.00}";
+		
+		doNothing().when(order).addSpecial((Mockito.any(Special.class)));
+		
+		mockMvc.perform(post("/specials/buyXForPrice")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(specialJSON))
+				.andExpect(status().isOk());
+		
+		
+		verify(order).addSpecial((Mockito.any(Special.class)));
 	}
 	
 	
