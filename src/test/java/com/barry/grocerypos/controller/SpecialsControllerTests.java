@@ -97,5 +97,22 @@ public class SpecialsControllerTests {
 	}
 	
 	
+	@Test
+	public void whenPostingToTheBuyXForPriceURIWithValidRequestReturnsSuccessfulJSONResponseMessage() throws Exception {
+		
+		
+		String specialJSON = "{\"itemName\":\"Eggs\", \"QuantityRequired\":3, \"totalPrice\":5.00}";
+		
+		
+		mockMvc.perform(post("/specials/buyXForPrice")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(specialJSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath(".message", hasItem("Special Successfully Added")));
+		
+	}
+	
+	
 
 }

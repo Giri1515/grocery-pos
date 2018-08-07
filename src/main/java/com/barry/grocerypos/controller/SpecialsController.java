@@ -26,10 +26,10 @@ public class SpecialsController {
 	}
 	
 	
-	@RequestMapping(value = "/buyXForPrice", method=POST)
+	@RequestMapping(value = "/buyXForPrice", method=POST, produces= "application/json")
 	public String addBuyXForPriceSpecial() {
 		
-		return "";
+		return "{\"message\":\"Special Successfully Added\"}";
 	}
 
 }
