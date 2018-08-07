@@ -9,18 +9,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.barry.grocerypos.entities.Inventory;
 import com.barry.grocerypos.entities.Item;
+import com.barry.grocerypos.entities.Order;
+import com.barry.grocerypos.entities.ScanRequest;
 
 @RestController
-@RequestMapping("/inventory")
-public class InventoryController {
+@RequestMapping("/scanner")
+public class ScannerController {
 
 	@Autowired
-	Inventory inventory;
+	private Inventory inventory;
+	
+	@Autowired
+	private Order order;
 	
 	@RequestMapping(value = "/items", method = POST, produces= "application/json")
-	public Item addItems(@RequestBody Item item) {
-		inventory.addItem(item.getName(), item.getPrice().doubleValue());
-		return item;
+	public String scanItem(@RequestBody ScanRequest scanRequest) {
+		Item item = inventory.getItemByName(scanRequest.getItemName());
+		
+		if(scanRequest.getWeight()!=0) {
+			item.setWeight(scanRequest.getWeight());
+		}
+		order.addItem(item);
+		
+		
+		return String.format("{\"orderTotal\":%s}", order.total().toString());
 	}
-	
 }

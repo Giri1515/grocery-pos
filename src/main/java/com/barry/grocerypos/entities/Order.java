@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import lombok.Getter;
 
+@Component
 public class Order {
 	
 	@Getter
@@ -120,6 +123,11 @@ public class Order {
 	public void applyPercentOffSpecials() {
 		
 		percentOffSpecialMap.entrySet().forEach(special->special.getValue().applySpecial(itemList));
+		
+	}
+
+	public void clearOrder() {
+		itemList.clear();
 		
 	}
 
