@@ -67,7 +67,7 @@ public class SpecialsControllerTests {
 	
 	
 	@Test
-	public void whenPostingToTheMarkDownsURIWithValidRequestSuccessResponseIsReturned() throws Exception {
+	public void whenPostingToTheMarkDownsURIWithValidRequestSuccessMessageIsReturned() throws Exception {
 		
 		
 		String specialJSON = "{\"itemName\":\"Bacon\", \"priceReduction\":1.45}";
@@ -81,6 +81,8 @@ public class SpecialsControllerTests {
 				.andExpect(jsonPath(".message", hasItem("MarkDown Successfully Added")));
 		
 	}
+	
+	
 	
 
 }
