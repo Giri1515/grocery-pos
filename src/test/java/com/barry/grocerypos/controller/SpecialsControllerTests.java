@@ -88,7 +88,7 @@ public class SpecialsControllerTests {
 	public void whenPostingToTheBuyXForPriceURIWithValidRequestReturnsSuccessfulResponse() throws Exception {
 		
 		
-		String specialJSON = "{\"itemName\":\"Eggs\", \"QuantityRequired\":3, \"totalPrice\":5.00}";
+		String specialJSON = "{\"itemName\":\"Eggs\", \"quantityRequired\":3, \"totalPrice\":5.00}";
 		
 		mockMvc.perform(post("/specials/buyXForPrice")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -102,7 +102,7 @@ public class SpecialsControllerTests {
 	public void whenPostingToTheBuyXForPriceURIWithValidRequestReturnsSuccessfulJSONResponseMessage() throws Exception {
 		
 		
-		String specialJSON = "{\"itemName\":\"Eggs\", \"QuantityRequired\":3, \"totalPrice\":5.00}";
+		String specialJSON = "{\"itemName\":\"Eggs\", \"quantityRequired\":3, \"totalPrice\":5.00}";
 		
 		
 		mockMvc.perform(post("/specials/buyXForPrice")
@@ -117,7 +117,7 @@ public class SpecialsControllerTests {
 	@Test
 	public void whenPostingToTheBuyXForPriceURIWithValidRequestSpecialIsAddedToOrder() throws Exception {
 		
-		String specialJSON = "{\"itemName\":\"Eggs\", \"QuantityRequired\":3, \"totalPrice\":5.00}";
+		String specialJSON = "{\"itemName\":\"Eggs\", \"quantityRequired\":3, \"totalPrice\":5.00}";
 		
 		doNothing().when(order).addSpecial((Mockito.any(Special.class)));
 		

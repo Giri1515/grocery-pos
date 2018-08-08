@@ -14,7 +14,7 @@ public class Special {
 	
 	@Getter
 	@Setter
-	private int QuantityRequired;
+	private int quantityRequired;
 	
 	@Getter
 	@Setter
@@ -23,7 +23,7 @@ public class Special {
 	public BigDecimal getUnitPrice() {
 		
 		// scale to 3 to keep precision for correct calculations when dividing uneven values
-		return totalPrice.divide(new BigDecimal(QuantityRequired), 3, RoundingMode.HALF_UP); 
+		return totalPrice.divide(new BigDecimal(quantityRequired), 3, RoundingMode.HALF_UP); 
 	}
 
 }
