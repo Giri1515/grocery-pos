@@ -2,11 +2,13 @@ package com.barry.grocerypos.controller;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -106,9 +108,26 @@ public class InventoryControllerTests {
 		Item item = inventory.getItemByName("Swiss Cake Rolls");
 		
 		assertNotNull(item);
-		assertThat(new BigDecimal(2.99), Matchers.comparesEqualTo(item.getPrice()));
+		assertThat(new BigDecimal(2.99).setScale(2, RoundingMode.HALF_UP), Matchers.comparesEqualTo(item.getPrice()));
 		
 		
 	}
+	
+	@Test
+	public void whenSendingGetRequestToItemsURIReturnsCurrentListOfItems() throws Exception {
+		
+		inventory.addItem("HoHo", 1.55);
+		
+		mockMvc.perform(get("/inventory/items")
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$[*].name", hasItem("HoHo")))
+				.andExpect(jsonPath("$[*].price", hasItem(1.55)));
+		
+		
+	}
+
 	
 }
