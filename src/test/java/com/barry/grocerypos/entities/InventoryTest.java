@@ -2,8 +2,10 @@ package com.barry.grocerypos.entities;
 
 import static org.junit.Assert.assertEquals;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import java.math.BigDecimal;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 public class InventoryTest {
@@ -32,7 +34,7 @@ public class InventoryTest {
 		Item retrievedItem = inventory.getItemByName("Bacon");
 		
 		assertEquals("Bacon", retrievedItem.getName());
-		assertEquals(new BigDecimal(10.00), retrievedItem.getPrice());
+		assertThat(new BigDecimal(10.00), Matchers.comparesEqualTo(retrievedItem.getPrice()));
 		
 	}
 	
@@ -47,9 +49,9 @@ public class InventoryTest {
 		Item cheeseItem = inventory.getItemByName("Cheese");
 		
 		assertEquals("Bacon", baconItem.getName());
-		assertEquals(new BigDecimal(10.00), baconItem.getPrice());
+		assertThat(new BigDecimal(10.00), Matchers.comparesEqualTo(baconItem.getPrice()));
 		assertEquals("Cheese", cheeseItem.getName());
-		assertEquals(new BigDecimal(5.00), cheeseItem.getPrice());
+		assertThat(new BigDecimal(5.00), Matchers.comparesEqualTo(cheeseItem.getPrice()));
 		
 		
 	}
