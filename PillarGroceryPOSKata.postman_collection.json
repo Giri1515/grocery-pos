@@ -1,0 +1,271 @@
+{
+	"variables": [],
+	"info": {
+		"name": "PillarGroceryPOSKata",
+		"_postman_id": "59e9986e-4713-fbee-62c2-6c401524b8a0",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add FunDip to Inventory",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/inventory/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"FunDip\",\"price\":0.99}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add MarkDown",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/specials/markdowns",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"itemName\":\"FunDip\",\"priceReduction\":0.49}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Special 3 KitKat for 5 dollars",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/specials/buyXForPrice",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"itemName\":\"KitKat\",\"quantityRequired\":3, \"totalPrice\":5.00}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Doritos to Inventory",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/inventory/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Doritos\",\"price\":\"2.97\"}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Twizzlers to Inventory",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/inventory/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Twizzlers\",\"price\":\"3.59\"}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add KitKat To Inventory",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/inventory/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"KitKat\",\"price\":\"2.79\"}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Items From Inventory",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/inventory/items",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"price\":\"2.50\"}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Scan in FunDip",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/scanner/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"itemName\":\"FunDip\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Scan KitKat",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/scanner/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"itemName\":\"KitKat\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Scan Doritos With Weight",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/scanner/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"itemName\":\"Doritos\", \"weight\": 2}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete FunDip From Order",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/scanner/items/FunDip",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Doritos From Order",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/scanner/items/Doritos",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete KitKat From Order",
+			"request": {
+				"url": "http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/scanner/items/KitKat",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
