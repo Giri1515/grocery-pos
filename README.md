@@ -16,7 +16,11 @@ This time to ensure that every commit to master was good, I set up a CodeBuild j
 So, I did feature branches for all my development and even before commiting locally I ran all the tests with maven and then did a "git add ." and then "git commit" to make sure I didn't miss anything.
 
 I also setup a CodePipeline on AWS to automatically test,build, and deploy the code to an Elastic Beanstalk instance.  I've added a Postman project as well as a link below to the Swagger/OAS if you want to hit the running app on AWS.
-(Warning it can be slow on my super small free tier).
+(Warning it can be slow on my super small free tier). 
+Base URL for app deployed on AWS:  http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999
+
+Simple GET Inventory Items URL to retrieve list of items:
+[http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/inventory/items](http://barrygrocerypos-env.mw9mxhkuak.us-east-1.elasticbeanstalk.com:8999/inventory/items)
 
 Postman collection is at root of project. [Here](https://github.com/javaplus/grocery-pos/blob/master/PillarGroceryPOSKata.postman_collection.json)
 
