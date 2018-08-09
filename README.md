@@ -18,9 +18,7 @@ So, I did feature branches for all my development and even before commiting loca
 I also setup a CodePipeline on AWS to automatically test,build, and deploy the code to an Elastic Beanstalk instance.  I've added a Postman project as well as a link below to the Swagger/OAS if you want to hit the running app on AWS.
 (Warning it can be slow on my super small free tier).
 
-Postman collection is at root of project.
+Postman collection is at root of project. [Here](https://github.com/javaplus/grocery-pos/blob/master/PillarGroceryPOSKata.postman_collection.json)
 
 I've also created a Swagger/Open API Spec on SwaggerHub for the API.
-
 The [OAS/Swagger](https://app.swaggerhub.com/apis/btarlton/grocery-store_kata_api/2.0#/) can be found [here](https://app.swaggerhub.com/apis/btarlton/grocery-store_kata_api/2.0#/)
-
