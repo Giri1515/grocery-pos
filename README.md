@@ -11,7 +11,7 @@ To actually run the application run "**mvn spring-boot:run**"
 The app will listen on port 8999. This can be changed in the [application.properties](https://github.com/javaplus/grocery-pos/blob/master/src/main/resources/application.properties)
 
 
-The previous time I submitted a kata, it was said that at some point I may have missed commiting a file because I had a commit that wouldn't build or pass the tests.
+The previous time I submitted a kata, it was said that at some point I may have missed committing a file because I had a commit that wouldn't build or pass the tests.
 This time to ensure that every commit to master was good, I set up a CodeBuild job on AWS to build each pull request to Master and to make sure it passed before I merged.  AWS CodeBuild definition is in the [buildspec.yml](https://github.com/javaplus/grocery-pos/blob/master/buildspec.yml).
 So, I did feature branches for all my development and even before commiting locally I ran all the tests with maven and then did a "git add ." and then "git commit" to make sure I didn't miss anything.
 
