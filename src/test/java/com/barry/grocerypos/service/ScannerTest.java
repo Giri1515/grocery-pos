@@ -38,6 +38,7 @@ public class ScannerTest {
 		
 		Scanner scanner = new Scanner();
 		scanner.setInventory(inventory);
+		scanner.getOrder().setInventory(inventory);
 		
 		scanner.scanItem("Bacon");
 		
@@ -54,6 +55,7 @@ public class ScannerTest {
 		
 		Scanner scanner = new Scanner();
 		scanner.setInventory(inventory);
+		scanner.getOrder().setInventory(inventory);
 		
 		scanner.scanItemWithWeight("Bacon", 2);
 		
