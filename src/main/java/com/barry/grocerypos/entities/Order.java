@@ -8,12 +8,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Component
 public class Order {
+	
+	@Autowired
+	@Setter
+	private Inventory inventory;
 	
 	@Getter
 	public List<Item> itemList = new ArrayList<>();
@@ -25,8 +31,10 @@ public class Order {
 	
 
 	public void addItem(Item newItem) {
-		
-		itemList.add(newItem);
+		// make a copy of the item
+		Item copyOfItem = new Item(newItem.getName(), newItem.getPrice().setScale(2, RoundingMode.HALF_UP).doubleValue());
+		copyOfItem.setWeight(newItem.getWeight());
+		itemList.add(copyOfItem);
 	}
 	
 	public int getSize() {
@@ -35,6 +43,13 @@ public class Order {
 	
 	public BigDecimal total() {
 		
+		// reset price of items to individual prices before applying specials
+		for (Item item : itemList) {
+			Item inventoryItem = inventory.getItemByName(item.getName());
+			// in case its not in inventory accept the price override
+			BigDecimal price = (inventoryItem!=null)? inventoryItem.getPrice(): item.getPrice();
+			item.setPrice(price);
+		}
 
 		applyMarkDowns();
 		

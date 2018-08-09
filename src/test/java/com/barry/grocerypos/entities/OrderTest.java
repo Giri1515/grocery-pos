@@ -20,6 +20,7 @@ public class OrderTest {
 	@Before
 	public void initializeOrder() {
 		order = new Order();
+		order.setInventory(new Inventory());
 	}
 	
 	
@@ -27,7 +28,7 @@ public class OrderTest {
 	
 	public void addingItemIncreasesSizeByOne() throws Exception{
 		
-		Item item = new Item();
+		Item item = new Item("",0.99);
 		
 		order.addItem(item);
 		
@@ -38,8 +39,8 @@ public class OrderTest {
 	@Test
 	public void addingTwoItemsIncreasesSizeByTwo() {
 		
-		order.addItem(new Item());
-		order.addItem(new Item());
+		order.addItem(new Item("", 1.00));
+		order.addItem(new Item("", 1.00));
 		
 		assertEquals(2, order.getSize());
 	
@@ -92,8 +93,8 @@ public class OrderTest {
 	
 	@Test 
 	public void orderSizeDecreasesByOneWhenRemovingItem() {
-		Item item = new Item();
-		item.setName("Bacon");
+		Item item = new Item("Bacon", 1.00);
+
 		order.addItem(item);
 		
 		order.removeItem("Bacon");
@@ -376,6 +377,31 @@ public class OrderTest {
 		
 	}
 	
+	
+	@Test
+	public void whenAddingMarkDownForItemAndCallingOrderTotalMultipleTimesMarkDownIsOnlyAppliedOnceSoTotalRemainsSame() {
+		
+		Inventory inventory = new Inventory();
+		inventory.addItem("Steak", 3.50);
+		order.setInventory(inventory);
+		
+		MarkDown markDown = new MarkDown();
+		markDown.setItemName("Steak");
+		markDown.setPriceReduction(new BigDecimal(1.50));
+		
+		order.addMarkDown(markDown);
+		
+
+		order.addItem(new Item("Steak", 3.50));
+		
+		
+		assertThat(new BigDecimal(2.00), Matchers.comparesEqualTo(order.total()));
+		
+		// call a second time
+		assertThat(new BigDecimal(2.00), Matchers.comparesEqualTo(order.total()));
+		
+	}
+
 	
 	
 }
